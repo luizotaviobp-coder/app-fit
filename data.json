@@ -66,7 +66,7 @@
         },
         {
           "name": "Supino reto com halteres",
-          "sets": 3,
+          "sets": 4,
           "reps": "8–10",
           "rest": "90–120 s"
         },
@@ -78,25 +78,25 @@
         },
         {
           "name": "Cross over polia alta",
-          "sets": 2,
+          "sets": 3,
           "reps": "12–15",
           "rest": "60 s"
         },
         {
           "name": "Supino máquina convergente",
-          "sets": 2,
+          "sets": 3,
           "reps": "10–12",
           "rest": "90 s"
         },
         {
           "name": "Crunch na polia alta",
-          "sets": 2,
+          "sets": 3,
           "reps": "12–15",
           "rest": "45–60 s"
         },
         {
           "name": "Prancha",
-          "sets": 2,
+          "sets": 3,
           "reps": "30–45 s",
           "rest": "45 s"
         }
@@ -107,13 +107,13 @@
       "exercises": [
         {
           "name": "Remada curvada com barra",
-          "sets": 3,
+          "sets": 4,
           "reps": "8–10",
           "rest": "120 s"
         },
         {
           "name": "Puxada na polia alta pegada aberta",
-          "sets": 3,
+          "sets": 4,
           "reps": "8–10",
           "rest": "90 s"
         },
@@ -125,25 +125,25 @@
         },
         {
           "name": "Remada cavalinho",
-          "sets": 3,
+          "sets": 4,
           "reps": "10–12",
           "rest": "90 s"
         },
         {
           "name": "Pullover na polia alta",
-          "sets": 2,
+          "sets": 3,
           "reps": "12–15",
           "rest": "60 s"
         },
         {
           "name": "Bird dog",
-          "sets": 2,
+          "sets": 3,
           "reps": "8–10 por lado",
           "rest": "30–45 s"
         },
         {
           "name": "Dead bug",
-          "sets": 2,
+          "sets": 3,
           "reps": "8–10 por lado",
           "rest": "30–45 s"
         }
@@ -160,13 +160,13 @@
         },
         {
           "name": "Cadeira extensora",
-          "sets": 4,
+          "sets": 3,
           "reps": "12",
           "rest": "45 s"
         },
         {
           "name": "Leg press 45°",
-          "sets": 3,
+          "sets": 4,
           "reps": "10",
           "rest": "60 s"
         },
@@ -178,7 +178,7 @@
         },
         {
           "name": "Panturrilha em pé",
-          "sets": 4,
+          "sets": 3,
           "reps": "20",
           "rest": "30 s"
         }
@@ -225,13 +225,13 @@
         },
         {
           "name": "Abdominal oblíquo na polia",
-          "sets": 2,
+          "sets": 3,
           "reps": "10–12 por lado",
           "rest": "45–60 s"
         },
         {
           "name": "Prancha lateral",
-          "sets": 2,
+          "sets": 3,
           "reps": "20–35 s por lado",
           "rest": "30–45 s"
         }
@@ -254,25 +254,25 @@
         },
         {
           "name": "Cadeira flexora",
-          "sets": 4,
+          "sets": 3,
           "reps": "10",
           "rest": "60 s"
         },
         {
           "name": "Elevação pélvica",
-          "sets": 3,
+          "sets": 4,
           "reps": "15",
           "rest": "30 s"
         },
         {
           "name": "Abdominal reverso",
-          "sets": 2,
+          "sets": 3,
           "reps": "12–15",
           "rest": "45 s"
         },
         {
           "name": "Elevação de joelhos deitado",
-          "sets": 2,
+          "sets": 3,
           "reps": "10–12",
           "rest": "45–60 s"
         }
@@ -295,7 +295,7 @@
         },
         {
           "name": "Tríceps francês com halteres",
-          "sets": 2,
+          "sets": 3,
           "reps": "10–12",
           "rest": "75 s"
         },
@@ -313,7 +313,7 @@
         },
         {
           "name": "Rosca martelo com halteres",
-          "sets": 2,
+          "sets": 3,
           "reps": "10–12",
           "rest": "60 s"
         }
@@ -346,6 +346,7 @@
     }
   ],
   "changeLog": [
+    "VOLUME: exercícios principais ajustados para 4 séries e acessórios para 3 séries; nenhum exercício permanece com 2 séries. Faixas de repetições, descansos, métodos e demais dados preservados em 09/11/2026.",
     "CORE: rotina distribuída nos treinos A/B/D/E com ênfases superior, estabilidade, oblíquos e inferior; volume inicial moderado de 2 séries por exercício, em 09/11/2026.",
     "TREINO C: agachamento livre substituído por agachamento pendular por autorização expressa do usuário em 08/11/2026. Séries e faixa de repetições originais preservadas.",
     "TREINOS A/B/F: peito e costas isolados nos dias A e B; braços concentrados no F. Inclusão de supino máquina convergente, pullover na polia e rosca martelo; métodos e volumes revisados em 09/11/2026.",
