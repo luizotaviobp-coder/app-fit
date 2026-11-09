@@ -2,6 +2,7 @@ const STORE='itaca.v1';
 const clone=o=>JSON.parse(JSON.stringify(o));
 let state={sessions:clone(ITACA_DATA.sessions),recovery:clone(ITACA_DATA.recovery),logs:[],activeWorkout:'A',view:'dashboard',month:new Date(new Date().getFullYear(),new Date().getMonth(),1),settings:{supabaseUrl:'',supabaseKey:''}};
 try{const saved=JSON.parse(localStorage.getItem(STORE)||'null');if(saved)state={...state,...saved}}catch(e){}
+if(!(state.month instanceof Date)){const restoredMonth=new Date(state.month||Date.now());state.month=Number.isNaN(restoredMonth.getTime())?new Date():restoredMonth;}
 const $=s=>document.querySelector(s), fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('pt-BR'), todayISO=()=>new Date().toISOString().slice(0,10), fmtNum=n=>new Intl.NumberFormat('pt-BR').format(n||0);
 function save(){localStorage.setItem(STORE,JSON.stringify(state));$('#syncText').textContent='Salvo neste dispositivo';}
 function nav(view){state.view=view;document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===view));const names={dashboard:'Visão geral',calendar:'Calendário',sessions:'Sessões',recovery:'Recuperação',workouts:'Fichas A–F',history:'Histórico'};$('#pageTitle').textContent=names[view];$('#eyebrow').textContent=view==='dashboard'?'CENTRAL DE PERFORMANCE':'SUA JORNADA • '+names[view].toUpperCase();render();}
