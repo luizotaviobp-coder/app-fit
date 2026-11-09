@@ -87,6 +87,18 @@
           "sets": 2,
           "reps": "10–12",
           "rest": "90 s"
+        },
+        {
+          "name": "Crunch na polia alta",
+          "sets": 2,
+          "reps": "12–15",
+          "rest": "45–60 s"
+        },
+        {
+          "name": "Prancha",
+          "sets": 2,
+          "reps": "30–45 s",
+          "rest": "45 s"
         }
       ]
     },
@@ -122,6 +134,18 @@
           "sets": 2,
           "reps": "12–15",
           "rest": "60 s"
+        },
+        {
+          "name": "Bird dog",
+          "sets": 2,
+          "reps": "8–10 por lado",
+          "rest": "30–45 s"
+        },
+        {
+          "name": "Dead bug",
+          "sets": 2,
+          "reps": "8–10 por lado",
+          "rest": "30–45 s"
         }
       ]
     },
@@ -198,6 +222,18 @@
           "sets": 3,
           "reps": "10",
           "rest": "30 s"
+        },
+        {
+          "name": "Abdominal oblíquo na polia",
+          "sets": 2,
+          "reps": "10–12 por lado",
+          "rest": "45–60 s"
+        },
+        {
+          "name": "Prancha lateral",
+          "sets": 2,
+          "reps": "20–35 s por lado",
+          "rest": "30–45 s"
         }
       ]
     },
@@ -229,16 +265,16 @@
           "rest": "30 s"
         },
         {
-          "name": "Abdominal tradicional",
-          "sets": 3,
-          "reps": "15",
-          "rest": "30 s"
+          "name": "Abdominal reverso",
+          "sets": 2,
+          "reps": "12–15",
+          "rest": "45 s"
         },
         {
-          "name": "Prancha",
-          "sets": 3,
-          "reps": "Até a falha técnica",
-          "rest": "30 s"
+          "name": "Elevação de joelhos deitado",
+          "sets": 2,
+          "reps": "10–12",
+          "rest": "45–60 s"
         }
       ]
     },
@@ -310,6 +346,7 @@
     }
   ],
   "changeLog": [
+    "CORE: rotina distribuída nos treinos A/B/D/E com ênfases superior, estabilidade, oblíquos e inferior; volume inicial moderado de 2 séries por exercício, em 09/11/2026.",
     "TREINO C: agachamento livre substituído por agachamento pendular por autorização expressa do usuário em 08/11/2026. Séries e faixa de repetições originais preservadas.",
     "TREINOS A/B/F: peito e costas isolados nos dias A e B; braços concentrados no F. Inclusão de supino máquina convergente, pullover na polia e rosca martelo; métodos e volumes revisados em 09/11/2026.",
     "TREINO C: mantido agachamento pendular no lugar do agachamento livre, conforme decisão anterior."
