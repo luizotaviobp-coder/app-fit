@@ -56,84 +56,72 @@
   },
   "workouts": {
     "A": {
-      "title": "TREINO A • PEITO E TRÍCEPS",
+      "title": "TREINO A • PEITO",
       "exercises": [
         {
           "name": "Supino inclinado com barra",
           "sets": 4,
           "reps": "8–10",
-          "rest": "60 s"
+          "rest": "120 s"
         },
         {
           "name": "Supino reto com halteres",
-          "sets": 4,
+          "sets": 3,
           "reps": "8–10",
-          "rest": "60 s"
+          "rest": "90–120 s"
         },
         {
           "name": "Crucifixo reto com halteres",
           "sets": 3,
-          "reps": "10",
-          "rest": "45 s"
+          "reps": "10–12",
+          "rest": "60–75 s"
         },
         {
           "name": "Cross over polia alta",
-          "sets": 3,
+          "sets": 2,
+          "reps": "12–15",
+          "rest": "60 s"
+        },
+        {
+          "name": "Supino máquina convergente",
+          "sets": 2,
           "reps": "10–12",
-          "rest": "45 s"
-        },
-        {
-          "name": "Tríceps na polia alta",
-          "sets": 4,
-          "reps": "10",
-          "rest": "60 s"
-        },
-        {
-          "name": "Tríceps testa na polia com barra",
-          "sets": 3,
-          "reps": "8–10",
-          "rest": "60 s"
+          "rest": "90 s"
         }
       ]
     },
     "B": {
-      "title": "TREINO B • COSTAS E BÍCEPS",
+      "title": "TREINO B • COSTAS",
       "exercises": [
         {
           "name": "Remada curvada com barra",
-          "sets": 4,
+          "sets": 3,
           "reps": "8–10",
-          "rest": "60 s"
+          "rest": "120 s"
         },
         {
           "name": "Puxada na polia alta pegada aberta",
           "sets": 3,
-          "reps": "10–12",
-          "rest": "60 s"
+          "reps": "8–10",
+          "rest": "90 s"
         },
         {
           "name": "Puxada na polia alta pegada fechada",
           "sets": 3,
           "reps": "10–12",
-          "rest": "60 s"
+          "rest": "90 s"
         },
         {
           "name": "Remada cavalinho",
           "sets": 3,
           "reps": "10–12",
+          "rest": "90 s"
+        },
+        {
+          "name": "Pullover na polia alta",
+          "sets": 2,
+          "reps": "12–15",
           "rest": "60 s"
-        },
-        {
-          "name": "Rosca alternada com halteres",
-          "sets": 3,
-          "reps": "10–12",
-          "rest": "45 s"
-        },
-        {
-          "name": "Rosca direta com barra",
-          "sets": 3,
-          "reps": "10",
-          "rest": "45 s"
         }
       ]
     },
@@ -255,37 +243,43 @@
       ]
     },
     "F": {
-      "title": "TREINO F • BRAÇOS E CARDIO",
+      "title": "TREINO F • BÍCEPS E TRÍCEPS",
       "exercises": [
         {
           "name": "Tríceps pulley com corda",
-          "sets": 4,
-          "reps": "10",
+          "sets": 3,
+          "reps": "10–12",
           "rest": "60 s"
         },
         {
           "name": "Tríceps testa na polia com barra",
           "sets": 3,
           "reps": "8–10",
-          "rest": "60 s"
+          "rest": "75 s"
         },
         {
           "name": "Tríceps francês com halteres",
+          "sets": 2,
+          "reps": "10–12",
+          "rest": "75 s"
+        },
+        {
+          "name": "Rosca alternada com halteres",
           "sets": 3,
           "reps": "8–10",
           "rest": "60 s"
         },
         {
-          "name": "Rosca alternada com halteres",
-          "sets": 3,
-          "reps": "10–12",
-          "rest": "45 s"
-        },
-        {
           "name": "Rosca direta com barra",
           "sets": 3,
-          "reps": "10",
-          "rest": "45 s"
+          "reps": "8–10",
+          "rest": "75 s"
+        },
+        {
+          "name": "Rosca martelo com halteres",
+          "sets": 2,
+          "reps": "10–12",
+          "rest": "60 s"
         }
       ]
     }
@@ -316,6 +310,8 @@
     }
   ],
   "changeLog": [
-    "TREINO C: agachamento livre substituído por agachamento pendular por autorização expressa do usuário em 08/11/2026. Séries e faixa de repetições originais preservadas."
+    "TREINO C: agachamento livre substituído por agachamento pendular por autorização expressa do usuário em 08/11/2026. Séries e faixa de repetições originais preservadas.",
+    "TREINOS A/B/F: peito e costas isolados nos dias A e B; braços concentrados no F. Inclusão de supino máquina convergente, pullover na polia e rosca martelo; métodos e volumes revisados em 09/11/2026.",
+    "TREINO C: mantido agachamento pendular no lugar do agachamento livre, conforme decisão anterior."
   ]
 }
