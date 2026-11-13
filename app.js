@@ -4,6 +4,15 @@ let state={sessions:clone(ITACA_DATA.sessions),recovery:clone(ITACA_DATA.recover
 try{const saved=JSON.parse(localStorage.getItem(STORE)||'null');if(saved)state={...state,...saved}}catch(e){}
 if(!Array.isArray(state.logs))state.logs=[];
 if(!state.exerciseDone||typeof state.exerciseDone!=='object')state.exerciseDone={};
+if(!state.efWorkoutSwapV1){
+  const migrated={};
+  Object.entries(state.exerciseDone).forEach(([key,value])=>{
+    const match=key.match(/^([EF])(:.*)$/);
+    migrated[match?(match[1]==='E'?'F':'E')+match[2]:key]=value;
+  });
+  state.exerciseDone=migrated;
+  state.efWorkoutSwapV1=true;
+}
 if(!(state.month instanceof Date)){const restoredMonth=new Date(state.month||Date.now());state.month=Number.isNaN(restoredMonth.getTime())?new Date():restoredMonth;}
 const $=s=>document.querySelector(s), fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('pt-BR'), todayISO=()=>new Date().toISOString().slice(0,10), fmtNum=n=>new Intl.NumberFormat('pt-BR').format(n||0);
 function save(){localStorage.setItem(STORE,JSON.stringify(state));$('#syncText').textContent='Salvo neste dispositivo';}
