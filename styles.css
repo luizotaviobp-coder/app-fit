@@ -28,3 +28,6 @@
 .trend-bar-wrap{height:100px;width:22px;background:#202c39;border-radius:8px 8px 3px 3px;display:flex;align-items:flex-end;overflow:hidden}
 .trend-bar{display:block;width:100%;min-height:4px;background:linear-gradient(180deg,var(--accent2),var(--accent));border-radius:8px 8px 3px 3px}
 @media(max-width:650px){.set-entry-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.set-entry{padding:9px}.exercise-log-tools{align-items:stretch}.exercise-log-btn{width:100%}.history-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.trend-col{min-width:54px}}
+
+/* Progresso semanal das fichas */
+.tab.week-complete{background:#153b2d;border-color:#2f9b68;color:#9be5ba}.tab-check{display:inline-grid;place-items:center;width:17px;height:17px;margin-right:6px;border:1px solid currentColor;border-radius:50%;font-size:11px;line-height:1;vertical-align:middle}.tab.week-complete .tab-check{background:#38a66f;border-color:#38a66f;color:#071b11;font-weight:900}.tab.week-complete.active{background:#194b37;border-color:#55bd86;color:#b8f3cf}
