@@ -3,6 +3,7 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 let state={sessions:clone(ITACA_DATA.sessions),recovery:clone(ITACA_DATA.recovery),logs:[],activeWorkout:'A',view:'dashboard',month:new Date(new Date().getFullYear(),new Date().getMonth(),1),settings:{supabaseUrl:'',supabaseKey:''}};
 try{const saved=JSON.parse(localStorage.getItem(STORE)||'null');if(saved)state={...state,...saved}}catch(e){}
 if(!Array.isArray(state.logs))state.logs=[];
+if(!state.exerciseDone||typeof state.exerciseDone!=='object')state.exerciseDone={};
 if(!(state.month instanceof Date)){const restoredMonth=new Date(state.month||Date.now());state.month=Number.isNaN(restoredMonth.getTime())?new Date():restoredMonth;}
 const $=s=>document.querySelector(s), fmtDate=d=>new Date(d+'T12:00:00').toLocaleDateString('pt-BR'), todayISO=()=>new Date().toISOString().slice(0,10), fmtNum=n=>new Intl.NumberFormat('pt-BR').format(n||0);
 function save(){localStorage.setItem(STORE,JSON.stringify(state));$('#syncText').textContent='Salvo neste dispositivo';}
@@ -75,12 +76,21 @@ function workouts(){
   let w=state.activeWorkout,ex=ITACA_DATA.workouts[w].exercises;
   const cards=ex.map((e,i)=>{
     const d=details(e),logs=getExerciseLogs(e.name,w),last=logs[0],lastSets=last?normalizeLogSets(last):[];
+    const done=!!state.exerciseDone[exerciseDoneKey(w,i)];
     const lastText=last?'Último registro: '+fmtDate(last.date)+' · '+lastSets.map((s,j)=>'S'+(j+1)+' '+(Number(s.load)>0?fmtNum(s.load)+' kg':'peso corporal')+' × '+s.reps).join(' · '):'Ainda sem cargas registradas para este exercício.';
-    return '<details class="exercise" '+(i===0?'open':'')+'><summary><div><div class="exercise-name">'+(i+1)+'. '+e.name+'</div><div class="exercise-meta">'+e.sets+' séries · '+e.reps+' reps · descanso base '+e.rest+'</div></div><span class="pill">'+d[0]+'</span></summary><div class="exercise-body">'+
+    return '<details class="exercise" '+(done?'':(i===0?'open':''))+'><summary><button class="exercise-check '+(done?'is-done':'')+'" type="button" aria-label="'+(done?'Desmarcar exercício':'Marcar exercício como feito')+'" aria-pressed="'+done+'" onclick="toggleExerciseDone(\''+w+'\','+i+',event)">'+(done?'✓':'')+'</button><div class="exercise-heading"><div class="exercise-name">'+(i+1)+'. '+e.name+'</div><div class="exercise-meta">'+e.sets+' séries · '+e.reps+' reps · descanso base '+e.rest+'</div></div><span class="pill">'+d[0]+'</span></summary><div class="exercise-body">'+
       [['MÉTODO',d[0]+' — '+d[1]],['EXECUÇÃO',d[2]],['DESCANSO',d[3]],['PROGRESSÃO',d[4]]].map(([l,p])=>'<div class="detail"><label>'+l+'</label><p>'+p+'</p></div>').join('')+
       '<div class="exercise-log-tools"><div class="exercise-log-summary">'+lastText+'</div><button class="secondary-btn exercise-log-btn" type="button" onclick="openExerciseLog(\''+w+'\','+i+')">＋ Registrar cargas</button></div></div></details>';
   }).join('');
-  $('#view').innerHTML='<div class="workout-tabs">'+ 'ABCDEF'.split('').map(k=>'<button class="tab '+(k===w?'active':'')+'" onclick="setWorkout(\''+k+'\')">Treino '+k+'</button>').join('')+'</div><section class="card"><div class="section-head"><div><h2>'+ITACA_DATA.workouts[w].title+'</h2><div class="subtle">Ficha de treino e acompanhamento individual de cargas</div></div><span class="pill">'+ex.length+' exercícios</span></div><div class="exercise-list">'+cards+'</div><p class="hint">Registre cada série ao terminar o exercício. O Ítaca guarda carga, repetições e RIR por sessão para comparar sua evolução sem misturar métodos diferentes.</p></section>';
+  const completed=ex.filter((e,i)=>state.exerciseDone[exerciseDoneKey(w,i)]).length;
+  $('#view').innerHTML='<div class="workout-tabs">'+ 'ABCDEF'.split('').map(k=>'<button class="tab '+(k===w?'active':'')+'" onclick="setWorkout(\''+k+'\')">Treino '+k+'</button>').join('')+'</div><section class="card"><div class="section-head"><div><h2>'+ITACA_DATA.workouts[w].title+'</h2><div class="subtle">Ficha de treino e acompanhamento individual de cargas</div></div><span class="pill">'+completed+'/'+ex.length+' concluídos</span></div><div class="exercise-list">'+cards+'</div><p class="hint">Marque o círculo ao lado do exercício quando terminar. O bloco será recolhido; toque novamente no check para reabrir. O progresso fica salvo por ficha e dia.</p><p class="hint">Registre cada série ao terminar o exercício. O Ítaca guarda carga, repetições e RIR por sessão para comparar sua evolução sem misturar métodos diferentes.</p></section>';
+}
+function exerciseDoneKey(workout,index){return workout+':'+todayISO()+':'+index}
+function toggleExerciseDone(workout,index,event){
+  if(event){event.preventDefault();event.stopPropagation();}
+  const key=exerciseDoneKey(workout,index),wasDone=!!state.exerciseDone[key];
+  if(wasDone)delete state.exerciseDone[key];else state.exerciseDone[key]=true;
+  save();workouts();
 }
 function openExerciseLog(workout,index){
   const ex=ITACA_DATA.workouts[workout].exercises[index],previous=getExerciseLogs(ex.name,workout)[0],oldSets=previous?normalizeLogSets(previous):[];
@@ -127,5 +137,5 @@ function openLog(){let opts=Object.entries(ITACA_DATA.workouts).map(([k,v])=>`<o
 function openSettings(){showModal('Sincronização e dados',`<div class="field"><label>URL do projeto Supabase</label><input id="sbUrl" placeholder="https://seu-projeto.supabase.co" value="${state.settings.supabaseUrl||''}"></div><div class="field" style="margin-top:12px"><label>Chave anon/public do Supabase</label><input id="sbKey" placeholder="Chave pública (anon)" value="${state.settings.supabaseKey||''}"></div><p class="hint">A versão atual salva neste dispositivo. A sincronização em nuvem exige um projeto Supabase conectado, tabelas com políticas RLS e autenticação. Não cole aqui a chave service_role.</p><div class="form-actions"><button class="secondary-btn" onclick="exportData()" type="button">Exportar meus dados</button><button class="primary-btn" onclick="saveSettings()" type="button">Salvar configuração</button></div>`)}
 function saveSettings(){state.settings.supabaseUrl=$('#sbUrl').value.trim();state.settings.supabaseKey=$('#sbKey').value.trim();save();closeModal();alert('Configuração salva. A sincronização será ativada após configurar o projeto e autenticação Supabase.')}
 function exportData(){let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='itaca-backup.json';a.click();URL.revokeObjectURL(a.href)}
-$('#settingsBtn').onclick=openSettings;window.nav=nav;window.openSession=openSession;window.openRecovery=openRecovery;window.openLog=openLog;window.openExerciseLog=openExerciseLog;window.setHistoryExercise=setHistoryExercise;window.setWorkout=setWorkout;window.changeMonth=changeMonth;window.exportData=exportData;window.saveSettings=saveSettings;
+$('#settingsBtn').onclick=openSettings;window.nav=nav;window.openSession=openSession;window.openRecovery=openRecovery;window.openLog=openLog;window.openExerciseLog=openExerciseLog;window.setHistoryExercise=setHistoryExercise;window.setWorkout=setWorkout;window.toggleExerciseDone=toggleExerciseDone;window.changeMonth=changeMonth;window.exportData=exportData;window.saveSettings=saveSettings;
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});nav('dashboard');
