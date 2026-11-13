@@ -85,6 +85,7 @@ function workouts(){
   const completed=ex.filter((e,i)=>state.exerciseDone[exerciseDoneKey(w,i)]).length;
   $('#view').innerHTML='<div class="workout-tabs">'+ 'ABCDEF'.split('').map(k=>{const done=workoutWeekComplete(k);return '<button class="tab '+(k===w?'active ':'')+(done?'week-complete':'')+'" aria-label="Treino '+k+(done?', concluído nesta semana':', pendente nesta semana')+'" onclick="setWorkout(\''+k+'\')"><span class="tab-check">'+(done?'✓':'')+'</span>Treino '+k+'</button>'}).join('')+'</div><section class="card"><div class="section-head"><div><h2>'+ITACA_DATA.workouts[w].title+'</h2><div class="subtle">Ficha de treino e acompanhamento individual de cargas</div></div><span class="pill">'+completed+'/'+ex.length+' concluídos</span></div><div class="exercise-list">'+cards+'</div><p class="hint">Marque o círculo ao lado do exercício quando terminar. O bloco será recolhido; toque novamente no check para reabrir. O progresso fica salvo por ficha e dia.</p><p class="hint">Registre cada série ao terminar o exercício. O Ítaca guarda carga, repetições e RIR por sessão para comparar sua evolução sem misturar métodos diferentes.</p></section>';
 }
+function localDateISO(date=new Date()){return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0')}
 function weekDates(){
   const now=new Date(),monday=new Date(now.getFullYear(),now.getMonth(),now.getDate());
   monday.setDate(monday.getDate()-((monday.getDay()+6)%7));
@@ -94,7 +95,7 @@ function workoutWeekComplete(workout){
   const count=ITACA_DATA.workouts[workout].exercises.length;
   return weekDates().some(date=>Array.from({length:count},(_,i)=>!!state.exerciseDone[workout+':'+date+':'+i]).every(Boolean));
 }
-function exerciseDoneKey(workout,index){return workout+':'+todayISO()+':'+index}
+function exerciseDoneKey(workout,index){return workout+':'+localDateISO()+':'+index}
 function toggleExerciseDone(workout,index,event){
   if(event){event.preventDefault();event.stopPropagation();}
   const key=exerciseDoneKey(workout,index),wasDone=!!state.exerciseDone[key];
