@@ -40,3 +40,17 @@
 .danger-btn{background:#3a2025;border:1px solid #78404a;color:#ffc0c7;border-radius:10px;padding:11px 15px;cursor:pointer}
 .calendar-day-sessions{margin-top:14px}
 @media(max-width:650px){.session-edit-row{flex-wrap:wrap}.session-edit-row>div:nth-child(2){min-width:calc(100% - 48px)}.session-edit-row .secondary-btn{margin-left:48px}.session-edit-row .danger-btn{margin-left:0}}
+
+
+/* Ítaca — cinco módulos de evolução */
+.timer-dock{position:fixed;right:18px;bottom:18px;z-index:30;background:#182533;border:1px solid #8a7653;border-radius:16px;padding:14px 16px;box-shadow:0 15px 45px #0009;display:flex;align-items:center;gap:14px;min-width:220px}
+.timer-dock[hidden]{display:none}.timer-time{font:800 25px Manrope;color:var(--accent);font-variant-numeric:tabular-nums}.timer-caption{font-size:10px;color:var(--muted)}.timer-actions{display:flex;gap:6px}.timer-actions button{border:1px solid var(--line);background:#263747;color:var(--text);border-radius:8px;padding:7px 9px;cursor:pointer}
+.metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}.metric-card{background:#121c27;border:1px solid var(--line);border-radius:14px;padding:15px}.metric-card small{display:block;color:var(--muted);font-size:10px;letter-spacing:.08em}.metric-card b{display:block;font:800 24px Manrope;margin:8px 0 4px}.metric-card span{color:var(--muted);font-size:10px}
+.feature-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.feature-form .field input,.feature-form .field select{width:100%;border:1px solid #334354;border-radius:10px;background:#0c141d;color:var(--text);padding:11px}
+.feature-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}.feature-table{overflow:auto}.feature-table table{min-width:650px}
+.insight{border:1px solid var(--line);border-radius:13px;padding:14px;background:#111a24;margin-top:10px}.insight.warn{border-color:#8b6546}.insight.good{border-color:#426c5d}.insight b{display:block;margin-bottom:5px;font-size:13px}.insight p{margin:0;color:#aebbc8;font-size:12px;line-height:1.6}
+.library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.library-item{border:1px solid var(--line);background:#121c27;border-radius:13px;padding:14px}.library-item h3{font:700 14px Manrope;margin:0 0 7px}.library-item p{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0}
+.feature-search{width:100%;max-width:520px;border:1px solid #334354;border-radius:10px;background:#0c141d;color:var(--text);padding:12px;margin:12px 0 16px}
+.body-photo{width:76px;height:76px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
+@media(max-width:950px){.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.mobile-nav{overflow-x:auto;justify-content:flex-start;gap:4px}.mobile-nav button{flex:0 0 48px;min-width:48px}.metric-grid{gap:8px}.metric-card{padding:12px}.metric-card b{font-size:20px}.feature-form{grid-template-columns:repeat(2,minmax(0,1fr))}.library-grid{grid-template-columns:1fr}.timer-dock{right:10px;bottom:78px;min-width:190px}.feature-actions button{flex:1}}
