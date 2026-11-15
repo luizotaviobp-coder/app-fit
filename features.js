@@ -38,8 +38,11 @@
     const prior=sessions.filter(s=>inRange(s,daysAgo(27),new Date(daysAgo(7).getTime()-1)));
     const acute=recent.reduce((a,s)=>a+srpe(s),0),priorWeekly=prior.reduce((a,s)=>a+srpe(s),0)/3;
     const ratio=prior.length>=3&&priorWeekly>0?acute/priorWeekly:null;
-    const modalities=['Jiu-jítsu','Muay Thai','Musculação','Corrida','Natação','Outra'];
-    const totals=Object.fromEntries(modalities.map(m=>[m,recent.filter(s=>s.modality===m).reduce((a,s)=>a+srpe(s),0)]));
+    const fixedModalities=['Jiu-jítsu','Muay Thai','Musculação'];
+    const customModalities=[...new Set(recent.filter(s=>s.modality==='Outra').map(s=>(s.modalityName||'Outra modalidade').trim()).filter(Boolean))];
+    const modalities=[...fixedModalities,...customModalities];
+    const modalityOf=s=>s.modality==='Outra'?(s.modalityName||'Outra modalidade').trim():s.modality;
+    const totals=Object.fromEntries(modalities.map(m=>[m,recent.filter(s=>modalityOf(s)===m).reduce((a,s)=>a+srpe(s),0)]));
     const combat=totals['Jiu-jítsu']+totals['Muay Thai'],gym=totals['Musculação'];
     const fightSessions=recent.filter(s=>['Jiu-jítsu','Muay Thai'].includes(s.modality));
     const avgFightRpe=fightSessions.length?fightSessions.reduce((a,s)=>a+(Number(s.rpe)||0),0)/fightSessions.length:0;
