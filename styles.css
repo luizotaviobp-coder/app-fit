@@ -92,3 +92,23 @@
     overflow-wrap:anywhere;
   }
 }
+
+
+/* Painel integrado de carga: lutas + musculação */
+.load-panel{margin-top:16px}
+.load-subhead{font:700 12px Manrope;margin:4px 0 13px;color:#d7e0e8}
+.load-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;align-items:end;min-height:120px}
+.load-day{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;min-width:0}
+.load-day-bar{height:76px;width:100%;max-width:34px;background:#202c39;border-radius:8px 8px 3px 3px;display:flex;align-items:flex-end;overflow:hidden}
+.load-day-bar span{display:block;width:100%;min-height:3px;background:linear-gradient(180deg,var(--accent2),var(--accent));border-radius:8px 8px 3px 3px}
+.load-day b{font-size:9px;color:#d6c08f}
+.load-day small{font-size:9px;color:var(--muted);text-transform:capitalize}
+.load-baseline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.load-baseline>div{display:grid;gap:5px}
+.load-baseline small{font-size:9px;color:var(--muted);letter-spacing:.06em}
+.load-baseline b{font:700 17px Manrope;color:#e3eaf0}
+.exercise-memory{margin-top:12px;padding:11px 12px;border:1px solid #344556;border-radius:10px;background:#0e1721}
+.exercise-memory>b{font-size:9px;letter-spacing:.1em;color:var(--accent)}
+.exercise-memory p{font-size:10px!important;line-height:1.5;margin:6px 0!important;color:#aebbc8}
+.exercise-memory strong{color:#d7e0e8}
+@media(max-width:650px){.load-panel .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.load-panel .two-col{grid-template-columns:1fr}.load-baseline{gap:6px}.load-baseline small{font-size:8px}.load-baseline b{font-size:14px}.load-week{gap:5px}.load-day-bar{height:62px}}
