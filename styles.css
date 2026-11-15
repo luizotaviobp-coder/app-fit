@@ -31,3 +31,12 @@
 
 /* Progresso semanal das fichas */
 .tab.week-complete{background:#153b2d;border-color:#2f9b68;color:#9be5ba}.tab-check{display:inline-grid;place-items:center;width:17px;height:17px;margin-right:6px;border:1px solid currentColor;border-radius:50%;font-size:11px;line-height:1;vertical-align:middle}.tab.week-complete .tab-check{background:#38a66f;border-color:#38a66f;color:#071b11;font-weight:900}.tab.week-complete.active{background:#194b37;border-color:#55bd86;color:#b8f3cf}
+
+/* Gestão de sessões no calendário */
+.day-cell.selected{border-color:var(--accent);background:#1b2a37;box-shadow:inset 0 0 0 1px var(--accent)}
+.session-edit-row{gap:9px;padding:12px 0;border-bottom:1px solid var(--line);align-items:center}
+.session-edit-row:last-child{border-bottom:0}
+.session-edit-row .secondary-btn,.session-edit-row .danger-btn{padding:8px 10px;font-size:11px;white-space:nowrap}
+.danger-btn{background:#3a2025;border:1px solid #78404a;color:#ffc0c7;border-radius:10px;padding:11px 15px;cursor:pointer}
+.calendar-day-sessions{margin-top:14px}
+@media(max-width:650px){.session-edit-row{flex-wrap:wrap}.session-edit-row>div:nth-child(2){min-width:calc(100% - 48px)}.session-edit-row .secondary-btn{margin-left:48px}.session-edit-row .danger-btn{margin-left:0}}
