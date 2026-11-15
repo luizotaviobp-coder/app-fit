@@ -1,4 +1,4 @@
-const CACHE='itaca-shell-v17';
+const CACHE='itaca-shell-v18';
 const FILES=['./','./index.html','./styles.css','./app.js','./features.js','./data.js','./manifest.webmanifest','./icon.svg'];
 
 self.addEventListener('install',event=>{
