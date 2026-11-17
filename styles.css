@@ -121,3 +121,7 @@
 .intensity-row small{grid-column:1/-1;font-size:9px;color:var(--muted)}
 .exercise-recent{border-top:1px solid #293746;margin-top:8px;padding-top:6px}
 .exercise-recent p{font-size:9px!important}
+
+/* Observações de cargas: leitura e edição confortáveis */
+.exercise-log-notes{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
+.field textarea:focus{border-color:var(--accent)}
