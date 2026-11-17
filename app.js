@@ -3,7 +3,7 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 let state={sessions:clone(ITACA_DATA.sessions),recovery:clone(ITACA_DATA.recovery),logs:[],activeWorkout:'A',view:'dashboard',month:new Date(new Date().getFullYear(),new Date().getMonth(),1),settings:{supabaseUrl:'',supabaseKey:''}};
 try{const saved=JSON.parse(localStorage.getItem(STORE)||'null');if(saved)state={...state,...saved}}catch(e){}
 if(!Array.isArray(state.logs))state.logs=[];
-state.logs.forEach((log,i)=>{if(!log.id)log.id='legacy-'+i});
+state.logs.forEach((log,i)=>{if(!log.id)log.id='legacy-'+i;if(!log.sessionId&&log.workout&&log.date)log.sessionId='workout:'+log.workout+':'+log.date;if(!log.createdAt)log.createdAt=log.date||'';if(!log.updatedAt)log.updatedAt=log.createdAt;});
 if(!state.exerciseDone||typeof state.exerciseDone!=='object')state.exerciseDone={};
 if(!state.efWorkoutSwapV1){
   const migrated={};
@@ -94,8 +94,10 @@ function normalizeLogSets(log){
   return Array.from({length:count},(_,i)=>({setNo:i+1,load:Number(log.load)||0,reps:Number(log.reps)||0,rir:log.rir==null?null:Number(log.rir)}));
 }
 function getExerciseLogs(exercise,workout){
-  return state.logs.filter(l=>l.exercise===exercise&&(!workout||l.workout===workout)).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  return state.logs.filter(l=>l.exercise===exercise&&(!workout||l.workout===workout)).slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.updatedAt||b.createdAt||'').localeCompare(a.updatedAt||a.createdAt||''));
 }
+function workoutSessionId(workout,date){return 'workout:'+workout+':'+date}
+function newLogId(){return 'log-'+(globalThis.crypto&&crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2,9))}
 function workouts(){
   let w=state.activeWorkout,ex=ITACA_DATA.workouts[w].exercises;
   const cards=ex.map((e,i)=>{
@@ -127,7 +129,7 @@ function toggleExerciseDone(workout,index,event){
   save();workouts();
 }
 function openExerciseLog(workout,index,editId=null){
-  const ex=ITACA_DATA.workouts[workout].exercises[index],editing=editId?state.logs.find(l=>String(l.id)===String(editId)):null,previous=editing||getExerciseLogs(ex.name,workout)[0],reference=getExerciseLogs(ex.name,workout).find(l=>!editing||String(l.id)!==String(editing.id)),referenceSets=reference?normalizeLogSets(reference):[],oldSets=editing?normalizeLogSets(editing):[];
+  const ex=ITACA_DATA.workouts[workout].exercises[index],today=todayISO(),sameDay=state.logs.find(l=>l.exercise===ex.name&&l.workout===workout&&(l.sessionId===workoutSessionId(workout,today)||(!l.sessionId&&l.date===today))),editing=editId?state.logs.find(l=>String(l.id)===String(editId)):sameDay||null,previous=editing||getExerciseLogs(ex.name,workout)[0],reference=getExerciseLogs(ex.name,workout).find(l=>!editing||String(l.id)!==String(editing.id)),referenceSets=reference?normalizeLogSets(reference):[],oldSets=editing?normalizeLogSets(editing):[];
   const count=Math.max(1,editing?oldSets.length:Number(ex.sets)||3),repDefault=(String(ex.reps).match(/\d+/)||[])[0]||'10';
   const rows=Array.from({length:count},(_,i)=>{
     const old=oldSets[i]||{},load=editing?(old.load==null?'':old.load):'',reps=editing?(old.reps==null?repDefault:old.reps):repDefault,rir=editing?(old.rir==null?2:old.rir):2;
@@ -145,8 +147,9 @@ function openExerciseLog(workout,index,editId=null){
       const load=Number(f.get('load_'+i)||0),reps=Number(f.get('reps_'+i)||0),rirRaw=f.get('rir_'+i);
       setEntries.push({setNo:i+1,load,reps,rir:rirRaw===''?null:Number(rirRaw)});
     }
-    const updated={...(editing||{}),id:editing?editing.id:Date.now().toString(),date:String(f.get('date')),workout,exercise:ex.name,method:details(ex)[0],setEntries,notes:String(f.get('notes')||'')};
-    if(editing){const pos=state.logs.findIndex(l=>String(l.id)===String(editId));if(pos>=0)state.logs[pos]=updated;}
+    const savedDate=String(f.get('date')),now=new Date().toISOString();
+    const updated={...(editing||{}),id:editing?editing.id:newLogId(),sessionId:workoutSessionId(workout,savedDate),date:savedDate,workout,exercise:ex.name,method:details(ex)[0],setEntries,notes:String(f.get('notes')||''),createdAt:editing?.createdAt||now,updatedAt:now};
+    if(editing){const pos=state.logs.findIndex(l=>String(l.id)===String(editing.id));if(pos>=0)state.logs[pos]=updated;else state.logs.push(updated);}
     else state.logs.push(updated);
     save();closeModal();if(state.view==='history')history();else workouts();
   };
@@ -158,7 +161,7 @@ function history(){
   const names=Array.from(new Set(Object.values(ITACA_DATA.workouts).flatMap(w=>w.exercises.map(e=>e.name)).concat(state.logs.map(l=>l.exercise)))).sort();
   const chosen=state.historyExercise||'all',filtered=state.logs.filter(l=>chosen==='all'||l.exercise===chosen).slice().sort((a,b)=>(a.date||'').localeCompare(b.date||''));
   const flat=filtered.flatMap(l=>normalizeLogSets(l).map((s,i)=>({date:l.date,workout:l.workout,exercise:l.exercise,setNo:s.setNo||i+1,load:Number(s.load)||0,reps:Number(s.reps)||0,rir:s.rir,volume:(Number(s.load)||0)*(Number(s.reps)||0),notes:l.notes||''})));
-  const totalVolume=flat.reduce((a,s)=>a+s.volume,0),bestLoad=Math.max(0,...flat.map(s=>s.load)),sessionCount=filtered.length;
+  const totalVolume=flat.reduce((a,s)=>a+s.volume,0),bestLoad=Math.max(0,...flat.map(s=>s.load)),sessionCount=new Set(filtered.map(l=>l.sessionId||workoutSessionId(l.workout||'A',l.date||''))).size;
   const trend=chosen==='all'?[]:filtered.slice(-8),trendMax=Math.max(1,...trend.map(l=>Math.max(0,...normalizeLogSets(l).map(s=>Number(s.load)||0))));
   const trendHtml=trend.length?'<div class="load-trend">'+trend.map(l=>{
     const best=Math.max(0,...normalizeLogSets(l).map(s=>Number(s.load)||0)),height=Math.max(4,best/trendMax*100);
